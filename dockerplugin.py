@@ -73,7 +73,7 @@ class Stats:
 
     @classmethod
     def read(cls, container, stats, t):
-        raise NotImplementedError
+       raise NotImplementedError
 
 
 class BlkioStats(Stats):
@@ -115,9 +115,9 @@ class CpuStats(Stats):
         cpu_usage = cpu_stats['cpu_usage']
 
         percpu = cpu_usage['percpu_usage']
-        for cpu, value in enumerate(percpu):
-            cls.emit(container, 'cpu.percpu.usage', [value],
-                     type_instance='cpu%d' % (cpu,), t=t)
+#        for cpu, value in enumerate(percpu):
+#            cls.emit(container, 'cpu.percpu.usage', [value],
+#                     type_instance='cpu%d' % (cpu,), t=t)
 
         items = sorted(cpu_stats['throttling_data'].items())
         cls.emit(container, 'cpu.throttling_data', [x[1] for x in items], t=t)
@@ -155,9 +155,9 @@ class MemoryStats(Stats):
                   mem_stats['usage']]
         cls.emit(container, 'memory.usage', values, t=t)
 
-        for key, value in mem_stats['stats'].items():
-            cls.emit(container, 'memory.stats', [value],
-                     type_instance=key, t=t)
+#        for key, value in mem_stats['stats'].items():
+#            cls.emit(container, 'memory.stats', [value],
+#                     type_instance=key, t=t)
 
         mem_percent = 100.0 * mem_stats['usage'] / mem_stats['limit']
         cls.emit(container, 'memory.percent', ["%.2f" % mem_percent], t=t)
